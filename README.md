@@ -1,0 +1,1 @@
+An amazon project made with SuperSimple.Dev's JS tutorial
