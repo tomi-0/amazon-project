@@ -79,7 +79,16 @@ document.querySelectorAll('.js-add-to-cart-button')
           quantity: 1,
         });
       };
-      
-      console.log(cart);
+
+      // Calculates total quantity of cart
+      // inside loop to increment as products are added
+      let totalQuantity = 0;
+      cart.forEach( (product) => {
+        totalQuantity += product.quantity;
+      })
+      document.querySelector('.js-cart-quantity')
+        .innerHTML = totalQuantity;
     })
   });
+
+// 
