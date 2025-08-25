@@ -1,8 +1,15 @@
 // Will store product object in this array
-export const cart = [];
+//export let cart = [];
+export let cart = [{
+    productId: '83d4ca15-0f35-48f5-b7a3-1ea210004f2e',
+    quantity:1,
+}, {
+    productId:'54e0eccd-8f36-462b-b68a-8182611d9add',
+    quantity: 2,
+}];
 
 // adds product along with ots quantity to cart
- export function addToCart (productId, quantity) {
+export function addToCart (productId, quantity) {
   let inCart = false;
 
   // Checks if product is already in cart
@@ -21,4 +28,13 @@ export const cart = [];
       quantity: quantity,
     });
   };
+}
+
+export function removeFromCart(productId) {
+  // uses .filter() to remove an item from cart 
+  cart = cart.filter( (cartItem) => {
+    if (cartItem.productId === productId ) {
+      return false;
+    } return true;
+  });
 }
