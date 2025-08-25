@@ -41,7 +41,7 @@ products.forEach( (product) => {
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart js-added-to-cart-${product.id}">
             <img src="images/icons/checkmark.png">
             Added
           </div>
@@ -56,11 +56,15 @@ products.forEach( (product) => {
 // Adds prducts to webpage
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
+
+// Object to store timeouts for each product
+let addedMessageTimeoutIds = {};
+
 // Adds event listener to each button
 document.querySelectorAll('.js-add-to-cart-button')
   .forEach((button) => {
     button.addEventListener('click', () => {
-      const productId = button.dataset.productId;
+      const { productId } = button.dataset;
       let inCart = false;
 
       // Collects the quantity from dropdown menu
@@ -75,12 +79,29 @@ document.querySelectorAll('.js-add-to-cart-button')
           inCart = true;
         } 
       });
+
+      // Displayed 'Added' message on screen for 2s
+      const addedMessage = document.querySelector(`.js-added-to-cart-${productId}`).classList.add('toggled');
+
+      // Clear any timeouts for the product
+      const previousTimeoutId = addedMessageTimeoutIds[productId];
+      if (previousTimeoutId) {
+        clearTimeout(previousTimeoutId);
+      } 
+        
+      timeoutId = setTimeout( () => {
+        document.querySelector(`.js-added-to-cart-${productId}`).classList.remove('toggled');
+      }, 2000);
+
+      // Saves timeout id to product id
+      addedMessageTimeoutIds[productId] = timeoutId;
       
+
       // If not in cart a new object is added to cart array
       if (!inCart) {
         cart.push({
           productId,
-          quantity: quantity,
+          quantity,
         });
       };
 
