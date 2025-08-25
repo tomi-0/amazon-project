@@ -1,3 +1,7 @@
+// imports
+import { cart } from "../data/cart.js";
+import { products } from "../data/products.js";
+
 // generates HTML for all item objects in the products.js products array
 let productsHTML = '';
 products.forEach( (product) => {
@@ -89,7 +93,7 @@ document.querySelectorAll('.js-add-to-cart-button')
         clearTimeout(previousTimeoutId);
       } 
         
-      timeoutId = setTimeout( () => {
+      const timeoutId = setTimeout( () => {
         document.querySelector(`.js-added-to-cart-${productId}`).classList.remove('toggled');
       }, 2000);
 
