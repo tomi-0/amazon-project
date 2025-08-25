@@ -1,12 +1,12 @@
 // Will store product object in this array
-//export let cart = [];
-export let cart = [{
-    productId: '83d4ca15-0f35-48f5-b7a3-1ea210004f2e',
-    quantity:1,
-}, {
-    productId:'54e0eccd-8f36-462b-b68a-8182611d9add',
-    quantity: 2,
-}];
+
+// will either assign [] or current cart contents to cart array when page is reloaded
+export let cart = [] && JSON.parse(localStorage.getItem('cart'));
+
+// saves cart's contents to local storage
+function saveToStorage() {
+  localStorage.setItem('cart',JSON.stringify(cart));
+}
 
 // adds product along with ots quantity to cart
 export function addToCart (productId, quantity) {
@@ -28,6 +28,7 @@ export function addToCart (productId, quantity) {
       quantity: quantity,
     });
   };
+  saveToStorage();
 }
 
 export function removeFromCart(productId) {
@@ -37,4 +38,5 @@ export function removeFromCart(productId) {
       return false;
     } return true;
   });
+  saveToStorage();
 }
