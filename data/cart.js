@@ -3,6 +3,12 @@
 // will either assign [] or current cart contents to cart array when page is reloaded
 export let cart = [] && JSON.parse(localStorage.getItem('cart'));
 
+cart = [{
+  productId: "83d4ca15-0f35-48f5-b7a3-1ea210004f2e",
+  quantity: 1,
+  deliveryOptionId: 2,
+}];
+
 // saves cart's contents to local storage
 function saveToStorage() {
   localStorage.setItem('cart',JSON.stringify(cart));
@@ -25,7 +31,9 @@ export function addToCart (productId, quantity) {
   if (!inCart) {
     cart.push({
       productId,
-      quantity: quantity,
+      quantity,
+      // default option
+      deliveryOptionId: 1,
     });
   };
   saveToStorage();
