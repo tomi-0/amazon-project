@@ -1,10 +1,6 @@
-import { cart,removeFromCart } from '../data/cart.js';
+import { cart,removeFromCart,calculateCartQuantity } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
-
-function renderOrderSummary() {
-
-}
 
 // For each item in cart it will generate HTML code
 let generatedHTML = '';
@@ -105,8 +101,17 @@ document.querySelectorAll('.js-delete-quantity-link').forEach( (deleteLink) => {
 			const id = deleteLink.dataset.productId;
 			removeFromCart(id);
 
-			// rmeoves item from web page
+			// removes item from web page
 			document.querySelector(`.js-cart-item-container-${id}`).remove();
+			updateCheckoutQuantity();
     });
-
 });
+
+// Will update checout number let totalQuantity = 0;
+function updateCheckoutQuantity() {
+	const total = calculateCartQuantity();
+	document.querySelector('.js-checkout-number')
+		.innerHTML = `${total} items`;
+}
+
+updateCheckoutQuantity();

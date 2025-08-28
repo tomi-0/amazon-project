@@ -1,7 +1,10 @@
 // imports
-import { cart, addToCart } from "../data/cart.js";
+import { cart, addToCart,calculateCartQuantity } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
+
+// will re-render cart when page loads
+updateCart();
 
 // generates HTML for all item objects in the products.js products array
 let productsHTML = '';
@@ -67,11 +70,7 @@ document.querySelector('.js-products-grid').innerHTML = productsHTML;
 export function updateCart() {
   // Calculates total quantity of cart
   // inside loop to increment as products are added
-  let totalQuantity = 0;
-  cart.forEach( cartItem => {
-    totalQuantity += cartItem.quantity;
-  })
-
+  let totalQuantity = calculateCartQuantity();
   document.querySelector('.js-cart-quantity')
     .innerHTML = totalQuantity;
 }
