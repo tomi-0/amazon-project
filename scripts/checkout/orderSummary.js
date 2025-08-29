@@ -4,6 +4,7 @@ import { formatCurrency } from '../utils/money.js';
 import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import { renderPaymentSummary } from './paymentSummary.js';
+import { renderCheckoutHeader } from './checkoutHeader.js';
 
 // For each item in cart it will generate HTML code
 export function renderOrderSummary() {
@@ -126,21 +127,11 @@ export function renderOrderSummary() {
 				removeFromCart(id);
 
 				// removes item from web page by reloading webpage contents automatically
+				renderCheckoutHeader();
 				renderOrderSummary();
-				updateCheckoutQuantity();
 				renderPaymentSummary();
 		});
 	});
-
-
-
-	// Will update checkout number let totalQuantity = 0;
-	function updateCheckoutQuantity() {
-		const total = calculateCartQuantity();
-		document.querySelector('.js-checkout-number')
-			.innerHTML = `${total} items`;
-	}
-	updateCheckoutQuantity();
 
 
 
@@ -163,7 +154,7 @@ export function renderOrderSummary() {
 			document.querySelector(`.js-quantity-label-${id}`).innerHTML = newQuantity;
 
 			// update quanitity in checkout header
-			updateCheckoutQuantity();
+			renderCheckoutHeader();
 			renderPaymentSummary();
 		} else {
 			alert('Invalid Quantity.\nMust be greater than 0 and less than 1000.');
