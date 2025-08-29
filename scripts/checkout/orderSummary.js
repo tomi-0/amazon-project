@@ -3,6 +3,7 @@ import { products, getProduct } from '../../data//products.js';
 import { formatCurrency } from '../utils/money.js';
 import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
+import { renderPaymentSummary } from './paymentSummary.js';
 
 // For each item in cart it will generate HTML code
 export function renderOrderSummary() {
@@ -115,6 +116,8 @@ export function renderOrderSummary() {
 	document.querySelector('.js-order-summary')
 	.innerHTML = generatedHTML;
 
+
+
 	// Will remove an item if the delete link in clicked
 	document.querySelectorAll('.js-delete-quantity-link').forEach( (deleteLink) => {
 			// removes item from cart
@@ -122,20 +125,24 @@ export function renderOrderSummary() {
 				const id = deleteLink.dataset.productId;
 				removeFromCart(id);
 
-				// removes item from web page
-				document.querySelector(`.js-cart-item-container-${id}`).remove();
+				// removes item from web page by reloading webpage contents automatically
+				renderOrderSummary();
 				updateCheckoutQuantity();
+				renderPaymentSummary();
 		});
 	});
 
-	// Will update checout number let totalQuantity = 0;
+
+
+	// Will update checkout number let totalQuantity = 0;
 	function updateCheckoutQuantity() {
 		const total = calculateCartQuantity();
 		document.querySelector('.js-checkout-number')
 			.innerHTML = `${total} items`;
 	}
-
 	updateCheckoutQuantity();
+
+
 
 	// retrieves all update links from each cart item
 	document.querySelectorAll('.js-update-quantity').forEach( (cartItem) => {
@@ -145,6 +152,7 @@ export function renderOrderSummary() {
 			// if we add new elements here they become click-only, won't keep update & save separate
 			document.querySelector(`.js-cart-item-container-${id}`).classList.add('is-editing-quantity');
 		})
+		
 	} )
 
 	function handleUpdateQuantity(id, newQuantity) {
@@ -156,6 +164,7 @@ export function renderOrderSummary() {
 
 			// update quanitity in checkout header
 			updateCheckoutQuantity();
+			renderPaymentSummary();
 		} else {
 			alert('Invalid Quantity.\nMust be greater than 0 and less than 1000.');
 		}
@@ -186,6 +195,7 @@ export function renderOrderSummary() {
 			
 			updateDeliveryOption(productId, deliveryOptionId);
 			renderOrderSummary();
+			renderPaymentSummary();
 		}) 
 	});
 };
