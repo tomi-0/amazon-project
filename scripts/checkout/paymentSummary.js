@@ -18,10 +18,7 @@ export function renderPaymentSummary () {
 
         totalQuantity += cartItem.quantity;
     });
-
-    console.log(cart);
-    console.log(totalItemPrice);
-    console.log(totalShippingPrice);
+    
     const totalBeforeTax = totalItemPrice + totalShippingPrice;
     const estimatedTax = totalBeforeTax * 0.1;
     const totalPriceCents = totalBeforeTax + estimatedTax;

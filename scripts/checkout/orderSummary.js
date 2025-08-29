@@ -142,8 +142,7 @@ export function renderOrderSummary() {
 			const id = cartItem.dataset.productId;
 			// if we add new elements here they become click-only, won't keep update & save separate
 			document.querySelector(`.js-cart-item-container-${id}`).classList.add('is-editing-quantity');
-		})
-		
+		});
 	} )
 
 	function handleUpdateQuantity(id, newQuantity) {
@@ -191,4 +190,3 @@ export function renderOrderSummary() {
 	});
 };
 
-renderOrderSummary();
