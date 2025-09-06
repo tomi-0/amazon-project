@@ -1,13 +1,14 @@
 import { cart,removeFromCart,calculateCartQuantity,updateQuantity,updateDeliveryOption } from '../../data/cart.js';
 import { products, getProduct } from '../../data//products.js';
 import { formatCurrency } from '../utils/money.js';
-import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
+import { deliveryOptions, getDeliveryOption,calculateDeliveryDate } from '../../data/deliveryOptions.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import { renderPaymentSummary } from './paymentSummary.js';
 import { renderCheckoutHeader } from './checkoutHeader.js';
 
 // For each item in cart it will generate HTML code
 export function renderOrderSummary() {
+
 	let generatedHTML = '';
 
 	cart.forEach( cartItem => {
@@ -19,13 +20,8 @@ export function renderOrderSummary() {
 		// finds delivery option object
 		const deliveryOpt = getDeliveryOption(deliveryOptionId);
 
-
-		const today = dayjs();
-		const deliveryDate = today.add(
-			deliveryOpt.deliveryDays,
-			'days');
 		// formats delivery date
-		const dateString = deliveryDate.format('dddd, MMM, D');
+		const dateString = calculateDeliveryDate(deliveryOpt);
 
 		generatedHTML += `
 				<div class="cart-item-container js-cart-item-container-${productElement.id}">
@@ -77,14 +73,12 @@ export function renderOrderSummary() {
 	function deliveryOptionsHTML(productElement, cartItem) {
 		let generatedHTML = '';
 
-		// Lopps through delivery options to find number of days
+		// Loops through delivery options to find number of days
 		deliveryOptions.forEach((deliveryOption) => {
-			const today = dayjs();
-			const deliveryDate = today.add(
-				deliveryOption.deliveryDays,
-				'days');
+
 			// formats delivery date
-			const dateString = deliveryDate.format('dddd, MMM, D');
+			const dateString = calculateDeliveryDate(deliveryOption);
+
 			const priceString = deliveryOption.priceCents === 0 ?
 				'FREE Shiping' :
 				`$${formatCurrency(deliveryOption.priceCents)} - Shipping`;
@@ -150,9 +144,10 @@ export function renderOrderSummary() {
 		if (newQuantity > 0 && newQuantity < 100) {
 			updateQuantity(id, newQuantity);
 			// update quanitity in cart item container
-			document.querySelector(`.js-quantity-label-${id}`).innerHTML = newQuantity;
+			//document.querySelector(`.js-quantity-label-${id}`).innerHTML = newQuantity;
 
 			// update quanitity in checkout header
+			renderOrderSummary();
 			renderCheckoutHeader();
 			renderPaymentSummary();
 		} else {
@@ -189,4 +184,5 @@ export function renderOrderSummary() {
 		}) 
 	});
 };
+
 
