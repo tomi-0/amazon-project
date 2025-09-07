@@ -1,7 +1,12 @@
 // Will store product object in this array
 
 // will either assign [] or current cart contents to cart array when page is reloaded
-export let cart = [] && JSON.parse(localStorage.getItem('cart'));
+export let cart;
+loadFromStorage();
+
+export function loadFromStorage() {
+  cart = JSON.parse(localStorage.getItem('cart')) || [];
+}
 
 // saves cart's contents to local storage
 function saveToStorage() {
@@ -68,3 +73,4 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
   })
   saveToStorage();
 }
+
