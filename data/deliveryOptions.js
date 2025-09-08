@@ -43,7 +43,6 @@ export function calculateDeliveryDate(deliveryOpt) {
 	while (daysLeft > 0) {
 			deliveryDate = deliveryDate.add(1, 'day');
 			//deliveryDay = deliveryDate.format('dddd');
-			console.log(!(isWeekend(deliveryDate)));
 			if (!isWeekend(deliveryDate)) {
 				daysLeft--;
 			}

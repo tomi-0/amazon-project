@@ -60,4 +60,3 @@ export function renderPaymentSummary () {
 
     document.querySelector('.js-payment-summary').innerHTML = paymentSummaryHTML;
 }
-renderPaymentSummary();
