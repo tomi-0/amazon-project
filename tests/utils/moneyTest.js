@@ -4,8 +4,6 @@ import {formatCurrency} from '../../scripts/utils/money.js';
 describe('test suite: formatCurrency', () => {
     // creates a test
     it('converts cents into dollars', () => {
-        // code inside test
-        // lets us comapre a value to another value - object returned
         expect(formatCurrency(2095)).toEqual('20.95');
     });
 
@@ -19,6 +17,10 @@ describe('test suite: formatCurrency', () => {
 
     it('rounds down correctly to the nearest cent', () => {
         expect(formatCurrency(1000.4)).toEqual('10.00');
+    })
+
+    it('handles negative numbers', () => {
+        expect(formatCurrency(-1000)).toEqual('-10.00');
     })
 });
  
