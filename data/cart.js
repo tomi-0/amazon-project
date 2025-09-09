@@ -1,5 +1,7 @@
 // Will store product object in this array
 
+import { deliveryOptions } from "./deliveryOptions.js";
+
 // will either assign [] or current cart contents to cart array when page is reloaded
 export let cart;
 loadFromStorage();
@@ -66,11 +68,31 @@ export function updateQuantity(productId, newQuantity) {
 }
 
 export function updateDeliveryOption(productId, deliveryOptionId) {
-  cart.forEach((cartItem) => {
-    if (cartItem.productId === productId) {
-      cartItem.deliveryOptionId = deliveryOptionId;
+  let found = false;
+
+ // if item is in cart update delivery option
+  if (validDeliveryOptions(deliveryOptionId)) {
+    cart.forEach((cartItem) => {
+      if (cartItem.productId === productId) {
+        cartItem.deliveryOptionId = deliveryOptionId;
+        found = true
+      }
+    })
+  }
+
+  if (found) {
+    saveToStorage();
+  } return;
+
+}
+
+function validDeliveryOptions(deliveryOptionNum) {
+  let found = false;
+  deliveryOptions.forEach( (option) => {
+    if (option.id === deliveryOptionNum) {
+      found = true;
     }
   })
-  saveToStorage();
+  return found;
 }
 

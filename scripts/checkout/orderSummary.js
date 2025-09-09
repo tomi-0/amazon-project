@@ -87,10 +87,10 @@ export function renderOrderSummary() {
 			const isChecked = deliveryOption.id === Number(cartItem.deliveryOptionId);
 
 			generatedHTML += `
-				<div class="delivery-option js-delivery-option" data-product-id="${productElement.id}" data-delivery-option-id="${deliveryOption.id}">
+				<div class="delivery-option js-delivery-option js-delivery-option-${productElement.id}-${deliveryOption.id}" data-product-id="${productElement.id}" data-delivery-option-id="${deliveryOption.id}">
 					<input type="radio" 
 					${isChecked ? 'checked' : ''}
-					class="delivery-option-input"
+					class="delivery-option-input js-delivery-option-input-${productElement.id}-${deliveryOption.id}"
 						name="delivery-option-${productElement.id}"
 						>
 					<div>
@@ -178,7 +178,7 @@ export function renderOrderSummary() {
 		element.addEventListener('click', () => {
 			const { productId, deliveryOptionId } = element.dataset;
 			
-			updateDeliveryOption(productId, deliveryOptionId);
+			updateDeliveryOption(productId, Number(deliveryOptionId));
 			renderOrderSummary();
 			renderPaymentSummary();
 		}) 
