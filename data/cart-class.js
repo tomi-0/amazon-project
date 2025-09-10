@@ -3,18 +3,18 @@ import { deliveryOptions } from "./deliveryOptions.js";
 
 class Cart {
     cartItems;
-    localStorageKey;
+    #localStorageKey;
 
     // constructor method
     constructor(key) {
-        this.localStorageKey = key;
-        this.loadFromStorage();
+        this.#localStorageKey = key;
+        this.#loadFromStorage();
     }
 
     // will either assign [] or current cart contents to cart array when page is reloaded
   
-    loadFromStorage() {
-        this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey)) || [
+    #loadFromStorage() {
+        this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey)) || [
             {
                 productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
                 quantity: 2,
@@ -29,7 +29,7 @@ class Cart {
 
     // saves cart's contents to local storage
     saveToStorage() {
-        localStorage.setItem(this.localStorageKey,JSON.stringify(this.cartItems));
+        localStorage.setItem(this.#localStorageKey,JSON.stringify(this.cartItems));
     }
 
         // adds product along with ots quantity to cart
@@ -118,6 +118,8 @@ class Cart {
     
 }
 
+const cart = new Cart('cart-oop');
+console.log(cart);
 
 
 
