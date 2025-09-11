@@ -118,8 +118,6 @@ class Cart {
     
 }
 
-const cart = new Cart('cart-oop');
-console.log(cart);
 
 
 
