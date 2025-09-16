@@ -11,7 +11,7 @@ export function getProduct(productId) {
   return productElement;
 }
 
-class Product {
+export class Product {
   id;
   image;
   name;
@@ -40,7 +40,7 @@ class Product {
 
 }
 
-class Clothing extends Product{
+export class Clothing extends Product{
   sizeChartLink;
 
   constructor(productDetails) {
@@ -55,7 +55,7 @@ class Clothing extends Product{
   }
 }
 
-class Appliance extends Product {
+export class Appliance extends Product {
   instructionsLink = 'images/appliance-instructions.png';
   warrantyLink = 'images/appliance-warranty.png';
 
