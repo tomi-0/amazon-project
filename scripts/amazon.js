@@ -1,8 +1,8 @@
 // imports
 import { cart, addToCart,calculateCartQuantity } from "../data/cart.js";
-import { loadProducts, products } from "../data/products.js";
+import { loadProductsFetch, products } from "../data/products.js";
 
-loadProducts(renderProductsGrid);
+loadProductsFetch().then(renderProductsGrid);
 
 function renderProductsGrid() {
   // will re-render cart when page loads

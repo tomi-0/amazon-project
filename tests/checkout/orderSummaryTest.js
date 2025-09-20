@@ -1,6 +1,6 @@
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 import { cart, loadFromStorage, updateDeliveryOption } from '../../data/cart.js';
-import { loadProducts, products } from "../../data/products.js";
+import { loadProductsFetch, products } from "../../data/products.js";
 
 describe('test suite: renderOrderSummary', () => {
 
@@ -32,10 +32,10 @@ describe('test suite: renderOrderSummary', () => {
         ])});
         loadFromStorage();
 
-        loadProducts(() => {
-            renderOrderSummary(products);
+        loadProductsFetch().then(() => {
+            renderOrderSummary();
             done();
-        });
+        })
 
     });
     

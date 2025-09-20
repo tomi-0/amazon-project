@@ -1,19 +1,21 @@
 import { cart,removeFromCart,calculateCartQuantity,updateQuantity,updateDeliveryOption } from '../../data/cart.js';
-import { getProduct } from '../../data//products.js';
+import { getProduct, loadProductsFetch, products } from '../../data//products.js';
 import { formatCurrency } from '../utils/money.js';
 import { deliveryOptions, getDeliveryOption,calculateDeliveryDate } from '../../data/deliveryOptions.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import { renderPaymentSummary } from './paymentSummary.js';
 import { renderCheckoutHeader } from './checkoutHeader.js';
 
-// For each item in cart it will generate HTML code
 
-export function renderOrderSummary(products) {
+loadProductsFetch();
+
+// For each item in cart it will generate HTML code
+export function renderOrderSummary() {
 	let generatedHTML = '';
 
 	cart.forEach( (cartItem) => {
 		// finds matching product
-		const productElement = getProduct(products, cartItem.productId);
+		const productElement = getProduct( cartItem.productId);
 
 		// need to convert deliveryOptionId into a number each time
 		const deliveryOptionId = Number(cartItem.deliveryOptionId);
@@ -124,8 +126,8 @@ export function renderOrderSummary(products) {
 
 				// removes item from web page by reloading webpage contents automatically
 				renderCheckoutHeader();
-				renderOrderSummary(products);
-				renderPaymentSummary(products);
+				renderOrderSummary();
+				renderPaymentSummary();
 		});
 	});
 
@@ -149,9 +151,9 @@ export function renderOrderSummary(products) {
 			//document.querySelector(`.js-quantity-label-${id}`).innerHTML = newQuantity;
 
 			// update quanitity in checkout header
-			renderOrderSummary(products);
+			renderOrderSummary();
 			renderCheckoutHeader();
-			renderPaymentSummary(products);
+			renderPaymentSummary();
 		} else {
 			alert('Invalid Quantity.\nMust be greater than 0 and less than 1000.');
 		}
@@ -181,8 +183,8 @@ export function renderOrderSummary(products) {
 			const { productId, deliveryOptionId } = element.dataset;
 			
 			updateDeliveryOption(productId, Number(deliveryOptionId));
-			renderOrderSummary(products);
-			renderPaymentSummary(products);
+			renderOrderSummary();
+			renderPaymentSummary();
 		}) 
 	});
 };

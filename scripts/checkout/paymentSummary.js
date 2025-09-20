@@ -3,14 +3,14 @@ import { getProduct } from "../../data/products.js";
 import { getDeliveryOption } from "../../data/deliveryOptions.js";
 import { formatCurrency } from "../utils/money.js";
 
-export function renderPaymentSummary (products) {
+export function renderPaymentSummary () {
 
     let totalItemPrice = 0;
     let totalShippingPrice = 0;
     let totalQuantity = 0;
     cart.forEach( (cartItem) => {
         // finds matching product
-        const productElement = getProduct(products, cartItem.productId);
+        const productElement = getProduct(cartItem.productId);
 
         totalItemPrice +=  productElement.priceCents * cartItem.quantity;
 
