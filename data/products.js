@@ -25,6 +25,7 @@ export function loadProducts(callback) {
   xhr.send();
 } */
 
+
 export function loadProductsFetch() {
   const promise = fetch('https://supersimplebackend.dev/products').then( (response) => {
     return response.json();

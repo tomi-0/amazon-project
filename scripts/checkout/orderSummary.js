@@ -112,8 +112,7 @@ export function renderOrderSummary() {
 		return generatedHTML;
 	};
 
-	document.querySelector('.js-order-summary')
-	.innerHTML = generatedHTML;
+	document.querySelector('.js-order-summary').innerHTML = generatedHTML;
 
 
 
