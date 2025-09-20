@@ -1,5 +1,6 @@
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 import { cart, loadFromStorage, updateDeliveryOption } from '../../data/cart.js';
+import { loadProducts, products } from "../../data/products.js";
 
 describe('test suite: renderOrderSummary', () => {
 
@@ -7,7 +8,7 @@ describe('test suite: renderOrderSummary', () => {
     const productId2 = "15b6fc6f-327a-4ec4-896f-486349e85a3d";
 
     // hook for setup code
-    beforeEach( () => {
+    beforeEach( (done) => {
         // mocks the setItem method - to do nothing
         spyOn(localStorage, 'setItem');
 
@@ -31,19 +32,26 @@ describe('test suite: renderOrderSummary', () => {
         ])});
         loadFromStorage();
 
-        renderOrderSummary();
-    })
+        loadProducts(() => {
+            renderOrderSummary(products);
+            done();
+        });
 
+    });
+    
     afterEach( () => {
         // removes HTML from page
         document.querySelector('.js-test-container').innerHTML="";
     })
+        
 
     it('displays the cart', () => {
         // checks there are 2 items in cart
         expect(
             document.querySelectorAll('.js-cart-item-container').length
         ).toEqual(2);
+        console.log(cart)
+        console.log(document.querySelector(`.js-test-container`));
 
         // checks that quantities of both items are correct
         expect(
@@ -143,7 +151,6 @@ describe('test suite: updateDeliveryOption', () => {
         ])});
         loadFromStorage();
 
-        renderOrderSummary();
     })
 
     afterEach( () => {

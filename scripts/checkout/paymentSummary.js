@@ -1,16 +1,16 @@
 import { cart } from "../../data/cart.js";
-import { products, getProduct } from "../../data/products.js";
+import { getProduct } from "../../data/products.js";
 import { getDeliveryOption } from "../../data/deliveryOptions.js";
 import { formatCurrency } from "../utils/money.js";
 
-export function renderPaymentSummary () {
+export function renderPaymentSummary (products) {
 
     let totalItemPrice = 0;
     let totalShippingPrice = 0;
     let totalQuantity = 0;
     cart.forEach( (cartItem) => {
         // finds matching product
-        const productElement = getProduct(cartItem.productId);
+        const productElement = getProduct(products, cartItem.productId);
 
         totalItemPrice +=  productElement.priceCents * cartItem.quantity;
 

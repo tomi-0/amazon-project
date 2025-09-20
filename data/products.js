@@ -2,9 +2,10 @@ import { formatCurrency } from '/scripts/utils/money.js';
 
 export let products = [];
 
+
 export function loadProducts(callback) {
   const xhr = new XMLHttpRequest();
-
+  
   xhr.addEventListener('load', () => {
     products = (JSON.parse(xhr.response).map( (product) => {
       if (product.type === 'clothing') {
@@ -16,30 +17,27 @@ export function loadProducts(callback) {
       return new Product(product);
     }));
 
-
-    callback();
     console.log('load products');
+    callback();
   })
 
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
-};
+}
 
-
-
-export function getProduct(productId) {
+export function getProduct(newProducts, productId) {
   let productElement;
-
+  products = newProducts
+  
   products.forEach( (product) => {
     if (product.id === productId) {
       productElement = product;
     }
   })
-
+  
   return productElement;
 }
-
-
+  
 export class Product {
   id;
   image;
@@ -99,3 +97,11 @@ export class Appliance extends Product {
     `;
   }
 }
+
+
+
+
+
+
+
+

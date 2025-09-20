@@ -1,12 +1,16 @@
 import { renderOrderSummary } from "./checkout/orderSummary.js";
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 import { renderCheckoutHeader } from "./checkout/checkoutHeader.js";
-import { loadProducts } from "../data/products.js";
+import { loadProducts, products } from "../data/products.js";
 
-loadProducts(() => {
+new Promise((resolve) => {
+    loadProducts( () => {
+        resolve(products);
+    });
+}).then( (loadedProducts) => {
     renderCheckoutHeader();
-    //renderOrderSummary();
-    renderPaymentSummary();
-});
+    renderOrderSummary(loadedProducts);
+    renderPaymentSummary(loadedProducts);  
+})
 
 

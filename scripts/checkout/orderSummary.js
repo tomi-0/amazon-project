@@ -1,22 +1,20 @@
 import { cart,removeFromCart,calculateCartQuantity,updateQuantity,updateDeliveryOption } from '../../data/cart.js';
-import { products, getProduct, loadProducts } from '../../data//products.js';
+import { getProduct } from '../../data//products.js';
 import { formatCurrency } from '../utils/money.js';
 import { deliveryOptions, getDeliveryOption,calculateDeliveryDate } from '../../data/deliveryOptions.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import { renderPaymentSummary } from './paymentSummary.js';
 import { renderCheckoutHeader } from './checkoutHeader.js';
 
-
 // For each item in cart it will generate HTML code
 
-loadProducts(renderOrderSummary);
-
-export function renderOrderSummary() {
+export function renderOrderSummary(products) {
 	let generatedHTML = '';
 
-	cart.forEach( cartItem => {
+	cart.forEach( (cartItem) => {
 		// finds matching product
-		let productElement = getProduct(cartItem.productId);
+		const productElement = getProduct(products, cartItem.productId);
+
 		// need to convert deliveryOptionId into a number each time
 		const deliveryOptionId = Number(cartItem.deliveryOptionId);
 		// finds delivery option object
@@ -68,6 +66,8 @@ export function renderOrderSummary() {
 		`;
 		
 	} )
+
+	
 
 
 
@@ -124,8 +124,8 @@ export function renderOrderSummary() {
 
 				// removes item from web page by reloading webpage contents automatically
 				renderCheckoutHeader();
-				renderOrderSummary();
-				renderPaymentSummary();
+				renderOrderSummary(products);
+				renderPaymentSummary(products);
 		});
 	});
 
@@ -149,9 +149,9 @@ export function renderOrderSummary() {
 			//document.querySelector(`.js-quantity-label-${id}`).innerHTML = newQuantity;
 
 			// update quanitity in checkout header
-			renderOrderSummary();
+			renderOrderSummary(products);
 			renderCheckoutHeader();
-			renderPaymentSummary();
+			renderPaymentSummary(products);
 		} else {
 			alert('Invalid Quantity.\nMust be greater than 0 and less than 1000.');
 		}
@@ -181,12 +181,15 @@ export function renderOrderSummary() {
 			const { productId, deliveryOptionId } = element.dataset;
 			
 			updateDeliveryOption(productId, Number(deliveryOptionId));
-			renderOrderSummary();
-			renderPaymentSummary();
+			renderOrderSummary(products);
+			renderPaymentSummary(products);
 		}) 
 	});
 };
 
+	
+
+	
 
 
 
