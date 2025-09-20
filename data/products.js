@@ -41,11 +41,12 @@ export function loadProductsFetch() {
     });
 
     console.log('load products');
+  }).catch( (error) => {
+    console.log('Unexpected Error. Please try again')
   })
 
   return promise;
 }
-
 
 export function getProduct( productId) {
   let productElement;
